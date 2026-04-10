@@ -221,23 +221,23 @@
     const adminView = document.getElementById('adminView');
 
     function playPing() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
+  try {
+    const audio = new Audio('https://raw.githubusercontent.com/viccyg/PizzaBestilling/main/pling.mp3');
+    audio.volume = 1.0;
 
-        const playTone = (freq, start, duration, volume) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, start);
-          gain.gain.setValueAtTime(0.001, start);
-          gain.gain.exponentialRampToValueAtTime(volume, start + 0.01);
-          gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(start);
-          osc.stop(start + duration + 0.02);
-        };
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // fallback hvis lyd er blokkert
+        document.addEventListener('click', () => audio.play(), { once: true });
+      });
+    }
+
+  } catch (e) {
+    console.log('Lyd feilet', e);
+  }
+}
 
         const now = ctx.currentTime;
         playTone(1320, now, 0.16, 0.12);
