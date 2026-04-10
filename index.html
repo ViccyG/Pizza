@@ -21,12 +21,14 @@
     .pizza-name { font-size: 22px; font-weight: 700; line-height: 1.1; }
     .image-placeholder { margin-top: 14px; width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; background: #ece5d8; border: 2px dashed #d1c5b2; display: flex; align-items: center; justify-content: center; text-align: center; color: #6d675f; font-weight: 700; padding: 12px; overflow: hidden; }
     .image-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .pizza-actions, .admin-controls { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .pizza-actions, .admin-controls, .top-actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .top-actions { justify-content: center; }
     button { border: none; border-radius: 14px; padding: 12px 16px; font-size: 15px; cursor: pointer; transition: .18s ease; }
     .primary-btn { background: #0f7a36; color: white; font-weight: 700; }
     .primary-btn:hover { background: #0c632c; }
     .secondary-btn { background: #efe8db; color: #1e1e1e; font-weight: 700; }
     .danger-btn { background: #ffe5e5; color: #a72828; font-weight: 700; }
+    .done-btn { background: #e4f3e8; color: #0f7a36; font-weight: 700; }
     .extras-box { margin-top: 14px; padding-top: 14px; border-top: 1px solid #efe8dd; display: none; }
     .extras-box.active { display: block; }
     .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
@@ -38,6 +40,7 @@
     .cart-empty, .muted { color: #6d675f; margin-top: 10px; }
     .cart-list, .admin-list { display: flex; flex-direction: column; gap: 14px; }
     .cart-item, .admin-order { border: 1px solid #ece6db; border-radius: 18px; padding: 14px; background: #fffdfa; }
+    .admin-order.done { opacity: .6; background: #f5f3ef; }
     .cart-name, .admin-name { font-weight: 700; font-size: 18px; }
     .cart-sub, .admin-sub { margin-top: 6px; color: #635c54; font-size: 14px; line-height: 1.45; }
     .cart-controls { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -52,14 +55,14 @@
     .send-btn { width: 100%; margin-top: 16px; padding: 15px 18px; font-size: 16px; font-weight: 700; background: #0f7a36; color: white; }
     .small-text { color: #6d675f; font-size: 13px; line-height: 1.5; margin-top: 10px; }
     .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #e4f3e8; color: #0f7a36; }
+    .badge.done { background: #ece7df; color: #6d675f; }
     .hidden { display: none; }
-    .admin-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .admin-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
     .admin-stat { background: #fffdfa; border: 1px solid #ece6db; border-radius: 18px; padding: 16px; }
     .admin-stat-label { font-size: 13px; color: #6d675f; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
     .admin-stat-value { font-size: 28px; font-weight: 700; margin-top: 8px; color: #0f7a36; }
-    .top-actions { margin-top: 12px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    @media (max-width: 980px) { .wrap { grid-template-columns: 1fr; } .cart-section { order: -1; } .admin-meta { grid-template-columns: 1fr; } }
-    @media (max-width: 600px) { header h1 { font-size: 26px; } .pizza-name { font-size: 20px; } .extras-grid { grid-template-columns: 1fr; } .wait-time { font-size: 24px; } }
+    @media (max-width: 980px) { .wrap { grid-template-columns: 1fr; } .cart-section { order: -1; } .admin-meta { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { header h1 { font-size: 26px; } .pizza-name { font-size: 20px; } .extras-grid { grid-template-columns: 1fr; } .wait-time { font-size: 24px; } .admin-meta { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -83,9 +86,9 @@
         <div id="cartArea"><p class="cart-empty">Ingen pizzaer lagt til enda.</p></div>
 
         <div class="wait-box">
-          <div class="wait-title">Estimert ventetid</div>
+          <div class="wait-title">Estimert ventetid akkurat nå</div>
           <div class="wait-time" id="waitTime">0 min</div>
-          <div class="wait-sub">Beregnes automatisk med 5 minutter per pizza i bestillingen.</div>
+          <div class="wait-sub">Køen bygger seg opp med ca. 5 minutter per pizza som ikke er markert ferdig enda.</div>
         </div>
 
         <div class="form-grid">
@@ -104,7 +107,7 @@
         </div>
 
         <button class="send-btn" id="sendOrderBtn">Send bestilling</button>
-        <div class="small-text">Denne versjonen sender bestillinger til et felles ark via Google Apps Script.</div>
+        <div class="small-text">Ventetiden hentes fra alle aktive bestillinger, ikke bare den du holder på med.</div>
       </aside>
     </div>
   </div>
@@ -115,18 +118,19 @@
       <p>Bestillinger fra alle mobiler</p>
       <div class="top-actions">
         <button class="secondary-btn" onclick="goToShop()">Tilbake til meny</button>
-        <button class="secondary-btn" onclick="refreshAdminOrders()">Oppdater</button>
+        <button class="secondary-btn" onclick="refreshAdminOrders(true)">Oppdater</button>
       </div>
     </header>
 
     <div class="admin-layout">
       <section class="admin-section">
         <h2 class="section-title">Bestillinger</h2>
-        <div class="admin-box muted">Denne admin-delen er bare lett skjult med kode. Den er fin for deg og kompisene, men ikke laget som høysikker løsning.</div>
+        <div class="admin-box muted">Nye bestillinger gir pling når admin-siden er åpen. Marker ferdige ordrer når de er laget, så går ventetiden ned automatisk.</div>
         <div class="admin-meta">
-          <div class="admin-stat"><div class="admin-stat-label">Antall bestillinger</div><div class="admin-stat-value" id="adminOrderCount">0</div></div>
-          <div class="admin-stat"><div class="admin-stat-label">Antall pizzaer</div><div class="admin-stat-value" id="adminPizzaCount">0</div></div>
-          <div class="admin-stat"><div class="admin-stat-label">Estimert total tid</div><div class="admin-stat-value" id="adminTotalTime">0 min</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Aktive bestillinger</div><div class="admin-stat-value" id="adminOrderCount">0</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Aktive pizzaer</div><div class="admin-stat-value" id="adminPizzaCount">0</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Ventetid nå</div><div class="admin-stat-value" id="adminTotalTime">0 min</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Ferdige totalt</div><div class="admin-stat-value" id="adminDoneCount">0</div></div>
         </div>
         <div class="admin-controls">
           <button class="danger-btn" onclick="clearAllOrders()">Slett alle bestillinger</button>
@@ -137,7 +141,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9VhdcCtgBfRb_CqeTp99Au3yMgEZPqnHzS36RcDbVwX-vLnKJoiRgUBaZjDIC6iI/exec';
+    const SCRIPT_URL = 'LIM_INN_APPS_SCRIPT_WEBAPP_URL_HER';
     const ADMIN_CODE = 'victor123';
 
     const pizzas = [
@@ -174,6 +178,8 @@
     ];
 
     let cart = [];
+    let lastKnownActiveOrderIds = [];
+    let adminPollInterval = null;
 
     const menuGrid = document.getElementById('menuGrid');
     const cartArea = document.getElementById('cartArea');
@@ -181,6 +187,23 @@
     const sendOrderBtn = document.getElementById('sendOrderBtn');
     const customerView = document.getElementById('customerView');
     const adminView = document.getElementById('adminView');
+
+    function playPing() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.5);
+      } catch (e) {}
+    }
 
     function imageMarkup(pizza) {
       if (pizza.image) return `<div class="image-placeholder"><img src="${pizza.image}" alt="${pizza.name}" /></div>`;
@@ -191,8 +214,20 @@
       return cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
-    function updateWaitTime() {
-      waitTime.textContent = `${getPizzaCount() * 5} min`;
+    async function refreshCustomerWaitTime() {
+      if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) {
+        waitTime.textContent = `${getPizzaCount() * 5} min`;
+        return;
+      }
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getQueue`);
+        const data = await res.json();
+        if (data.ok) {
+          waitTime.textContent = `${Number(data.waitMinutes || 0)} min`;
+        }
+      } catch (e) {
+        waitTime.textContent = `${getPizzaCount() * 5} min`;
+      }
     }
 
     function renderMenu() {
@@ -253,7 +288,6 @@
     function renderCart() {
       if (!cart.length) {
         cartArea.innerHTML = '<p class="cart-empty">Ingen pizzaer lagt til enda.</p>';
-        updateWaitTime();
         return;
       }
 
@@ -274,7 +308,6 @@
           </div>
         `;
       }).join('')}</div>`;
-      updateWaitTime();
     }
 
     async function sendOrder() {
@@ -287,13 +320,15 @@
         return;
       }
 
+      const liveWait = Number((waitTime.textContent || '0').replace(/[^\d]/g, '')) || 0;
       const order = {
         customerName: document.getElementById('customerName').value.trim() || 'Uten navn',
         pickupTime: document.getElementById('pickupTime').value.trim() || 'Ikke valgt',
         message: document.getElementById('extraMessage').value.trim(),
         pizzaCount: getPizzaCount(),
-        estimatedWait: getPizzaCount() * 5,
+        estimatedWait: liveWait + (getPizzaCount() * 5),
         createdAt: new Date().toLocaleString('no-NO'),
+        status: 'active',
         items: cart
       };
 
@@ -315,7 +350,8 @@
         document.getElementById('pickupTime').value = '';
         document.getElementById('extraMessage').value = '';
         renderCart();
-        alert(`Bestilling sendt! Estimert ventetid er ${order.estimatedWait} min.`);
+        await refreshCustomerWaitTime();
+        alert(`Bestilling sendt! Ca ventetid nå er ${order.estimatedWait} min.`);
       } catch (error) {
         alert('Klarte ikke å sende bestilling. Sjekk Apps Script-oppsettet.');
       } finally {
@@ -324,7 +360,24 @@
       }
     }
 
-    async function refreshAdminOrders() {
+    async function updateOrderStatus(orderId, status) {
+      const code = sessionStorage.getItem('pizzaAdminCode') || '';
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'updateOrderStatus', orderId, status, adminCode: code })
+        });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'Kunne ikke oppdatere ordre');
+        await refreshAdminOrders(true);
+        await refreshCustomerWaitTime();
+      } catch (error) {
+        alert('Klarte ikke å oppdatere ordre.');
+      }
+    }
+
+    async function refreshAdminOrders(silent = false) {
       if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) return;
       const code = sessionStorage.getItem('pizzaAdminCode') || '';
       try {
@@ -333,10 +386,20 @@
         if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
 
         const orders = data.orders || [];
-        document.getElementById('adminOrderCount').textContent = orders.length;
-        const totalPizzas = orders.reduce((sum, order) => sum + Number(order.pizzaCount || 0), 0);
+        const activeOrders = orders.filter(order => order.status !== 'done');
+        const doneOrders = orders.filter(order => order.status === 'done');
+        const activeIds = activeOrders.map(order => String(order.id));
+
+        if (!silent && lastKnownActiveOrderIds.length && activeIds.some(id => !lastKnownActiveOrderIds.includes(id))) {
+          playPing();
+        }
+        lastKnownActiveOrderIds = activeIds;
+
+        document.getElementById('adminOrderCount').textContent = activeOrders.length;
+        const totalPizzas = activeOrders.reduce((sum, order) => sum + Number(order.pizzaCount || 0), 0);
         document.getElementById('adminPizzaCount').textContent = totalPizzas;
         document.getElementById('adminTotalTime').textContent = `${totalPizzas * 5} min`;
+        document.getElementById('adminDoneCount').textContent = doneOrders.length;
 
         const adminOrders = document.getElementById('adminOrders');
         if (!orders.length) {
@@ -345,18 +408,21 @@
         }
 
         adminOrders.innerHTML = `<div class="admin-list">${orders.map(order => `
-          <div class="admin-order">
-            <div class="badge">Bestilling</div>
+          <div class="admin-order ${order.status === 'done' ? 'done' : ''}">
+            <div class="${order.status === 'done' ? 'badge done' : 'badge'}">${order.status === 'done' ? 'Ferdig' : 'Aktiv'}</div>
             <div class="admin-name">${order.customerName}</div>
             <div class="admin-sub">Sendt: ${order.createdAt}</div>
             <div class="admin-sub">Ønsket tidspunkt: ${order.pickupTime}</div>
-            <div class="admin-sub">Ventetid: ${order.estimatedWait} min</div>
+            <div class="admin-sub">Pizzaer: ${order.pizzaCount}</div>
             ${order.message ? `<div class="admin-sub">Felles beskjed: ${order.message}</div>` : ''}
             <div class="admin-sub" style="margin-top:10px;">${(order.items || []).map(item => {
               const extras = item.extras?.length ? ` | ${item.extras.map(x => x.name).join(', ')}` : '';
               const note = item.note ? ` | ${item.note}` : '';
               return `${item.qty}x ${item.name}${extras}${note}`;
             }).join('<br>')}</div>
+            <div class="admin-controls">
+              ${order.status !== 'done' ? `<button class="done-btn" onclick="updateOrderStatus('${order.id}','done')">Marker som ferdig</button>` : `<button class="secondary-btn" onclick="updateOrderStatus('${order.id}','active')">Angre ferdig</button>`}
+            </div>
           </div>
         `).join('')}</div>`;
       } catch (error) {
@@ -375,10 +441,22 @@
         });
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
-        refreshAdminOrders();
+        lastKnownActiveOrderIds = [];
+        await refreshAdminOrders(true);
+        await refreshCustomerWaitTime();
       } catch (error) {
         alert('Klarte ikke å slette bestillinger.');
       }
+    }
+
+    function startAdminPolling() {
+      stopAdminPolling();
+      adminPollInterval = setInterval(() => refreshAdminOrders(false), 5000);
+    }
+
+    function stopAdminPolling() {
+      if (adminPollInterval) clearInterval(adminPollInterval);
+      adminPollInterval = null;
     }
 
     function showAdminLogin() {
@@ -391,18 +469,23 @@
       sessionStorage.setItem('pizzaAdminCode', code);
       customerView.classList.add('hidden');
       adminView.classList.remove('hidden');
-      refreshAdminOrders();
+      refreshAdminOrders(true);
+      startAdminPolling();
     }
 
     function goToShop() {
+      stopAdminPolling();
       adminView.classList.add('hidden');
       customerView.classList.remove('hidden');
+      refreshCustomerWaitTime();
     }
 
     sendOrderBtn.addEventListener('click', sendOrder);
 
     renderMenu();
     renderCart();
+    refreshCustomerWaitTime();
+    setInterval(refreshCustomerWaitTime, 10000);
 
     window.toggleExtras = toggleExtras;
     window.addPizzaToCart = addPizzaToCart;
@@ -412,6 +495,7 @@
     window.goToShop = goToShop;
     window.refreshAdminOrders = refreshAdminOrders;
     window.clearAllOrders = clearAllOrders;
+    window.updateOrderStatus = updateOrderStatus;
   </script>
 </body>
 </html>
