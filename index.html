@@ -6,346 +6,140 @@
   <title>PizzaBestilling</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f6f3ee;
-      color: #1e1e1e;
-    }
-    header {
-      background: #0f7a36;
-      color: white;
-      padding: 28px 20px;
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
-    header p {
-      margin: 8px 0 0;
-      opacity: 0.95;
-    }
-    .wrap {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 24px 16px 120px;
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 24px;
-    }
-    .menu-section, .cart-section {
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      padding: 20px;
-    }
-    .section-title {
-      margin: 0 0 18px;
-      font-size: 24px;
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .pizza-card {
-      border: 1px solid #ece7df;
-      border-radius: 22px;
-      padding: 16px;
-      background: #fffdfa;
-      transition: 0.18s ease;
-    }
-    .pizza-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-    }
-    .pizza-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: start;
-    }
-    .pizza-number {
-      color: #0f7a36;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-    .pizza-name {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-    .image-placeholder {
-      margin-top: 14px;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      border-radius: 18px;
-      background: #ece5d8;
-      border: 2px dashed #d1c5b2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #6d675f;
-      font-weight: 700;
-      padding: 12px;
-      overflow: hidden;
-    }
-    .image-placeholder img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .pizza-actions {
-      margin-top: 14px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 12px 16px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-    .primary-btn {
-      background: #0f7a36;
-      color: white;
-      font-weight: 700;
-    }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f6f3ee; color: #1e1e1e; }
+    header { background: #0f7a36; color: white; padding: 28px 20px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.12); position: sticky; top: 0; z-index: 10; }
+    header h1 { margin: 0; font-size: 32px; }
+    header p { margin: 8px 0 0; opacity: .95; }
+    .wrap, .admin-layout { max-width: 1300px; margin: 0 auto; padding: 24px 16px 120px; }
+    .wrap { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; }
+    .menu-section, .cart-section, .admin-section { background: white; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 20px; }
+    .section-title { margin: 0 0 18px; font-size: 24px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .pizza-card { border: 1px solid #ece7df; border-radius: 22px; padding: 16px; background: #fffdfa; transition: .18s ease; }
+    .pizza-card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.08); }
+    .pizza-number { color: #0f7a36; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .pizza-name { font-size: 22px; font-weight: 700; line-height: 1.1; }
+    .image-placeholder { margin-top: 14px; width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; background: #ece5d8; border: 2px dashed #d1c5b2; display: flex; align-items: center; justify-content: center; text-align: center; color: #6d675f; font-weight: 700; padding: 12px; overflow: hidden; }
+    .image-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pizza-actions, .admin-controls { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    button { border: none; border-radius: 14px; padding: 12px 16px; font-size: 15px; cursor: pointer; transition: .18s ease; }
+    .primary-btn { background: #0f7a36; color: white; font-weight: 700; }
     .primary-btn:hover { background: #0c632c; }
-    .secondary-btn {
-      background: #efe8db;
-      color: #1e1e1e;
-      font-weight: 700;
-    }
-    .secondary-btn:hover { background: #e6dccb; }
-    .extras-box {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid #efe8dd;
-      display: none;
-    }
+    .secondary-btn { background: #efe8db; color: #1e1e1e; font-weight: 700; }
+    .danger-btn { background: #ffe5e5; color: #a72828; font-weight: 700; }
+    .extras-box { margin-top: 14px; padding-top: 14px; border-top: 1px solid #efe8dd; display: none; }
     .extras-box.active { display: block; }
-    .extras-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .extra-item {
-      background: #f7f3ec;
-      border-radius: 14px;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: center;
-    }
-    .extra-item label {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      cursor: pointer;
-      width: 100%;
-      font-size: 14px;
-    }
-    .note-area {
-      width: 100%;
-      min-height: 72px;
-      margin-top: 12px;
-      border-radius: 14px;
-      border: 1px solid #ddd4c5;
-      padding: 12px;
-      font: inherit;
-      resize: vertical;
-    }
-    .cart-empty {
-      color: #6d675f;
-      margin-top: 10px;
-    }
-    .cart-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .cart-item {
-      border: 1px solid #ece6db;
-      border-radius: 18px;
-      padding: 14px;
-      background: #fffdfa;
-    }
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: start;
-    }
-    .cart-name {
-      font-weight: 700;
-      font-size: 18px;
-    }
-    .cart-sub {
-      margin-top: 6px;
-      color: #635c54;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-    .cart-controls {
-      margin-top: 12px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .qty-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: #efe8db;
-      font-size: 20px;
-      padding: 0;
-    }
-    .remove-btn {
-      background: #ffe5e5;
-      color: #a72828;
-      font-weight: 700;
-    }
-    .form-grid {
-      display: grid;
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .field label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-    .field input, .field textarea {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border: 1px solid #ddd4c5;
-      font: inherit;
-      background: white;
-    }
-    .field textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-    .wait-box {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 18px;
-      background: #f7f3ec;
-      border: 1px solid #ece6db;
-    }
-    .wait-title {
-      font-size: 13px;
-      color: #6d675f;
-      margin-bottom: 6px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .wait-time {
-      font-size: 28px;
-      font-weight: 700;
-      color: #0f7a36;
-      line-height: 1;
-    }
-    .wait-sub {
-      margin-top: 8px;
-      color: #635c54;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-    .send-btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 15px 18px;
-      font-size: 16px;
-      font-weight: 700;
-      background: #0f7a36;
-      color: white;
-    }
-    .send-btn:hover { background: #0c632c; }
-    .small-text {
-      color: #6d675f;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-    @media (max-width: 980px) {
-      .wrap { grid-template-columns: 1fr; }
-      .cart-section { order: -1; }
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 26px; }
-      .pizza-name { font-size: 20px; }
-      .extras-grid { grid-template-columns: 1fr; }
-      .pizza-top, .cart-header { flex-direction: column; }
-      .wait-time { font-size: 24px; }
-    }
+    .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+    .extra-item { background: #f7f3ec; border-radius: 14px; padding: 10px; }
+    .extra-item label { display: flex; gap: 8px; align-items: center; cursor: pointer; width: 100%; font-size: 14px; }
+    .note-area, .field input, .field textarea { width: 100%; border-radius: 14px; border: 1px solid #ddd4c5; padding: 12px 14px; font: inherit; background: white; }
+    .note-area { min-height: 72px; margin-top: 12px; resize: vertical; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .cart-empty, .muted { color: #6d675f; margin-top: 10px; }
+    .cart-list, .admin-list { display: flex; flex-direction: column; gap: 14px; }
+    .cart-item, .admin-order { border: 1px solid #ece6db; border-radius: 18px; padding: 14px; background: #fffdfa; }
+    .cart-name, .admin-name { font-weight: 700; font-size: 18px; }
+    .cart-sub, .admin-sub { margin-top: 6px; color: #635c54; font-size: 14px; line-height: 1.45; }
+    .cart-controls { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .qty-btn { width: 38px; height: 38px; border-radius: 12px; background: #efe8db; font-size: 20px; padding: 0; }
+    .remove-btn { background: #ffe5e5; color: #a72828; font-weight: 700; }
+    .form-grid { display: grid; gap: 12px; margin-top: 22px; }
+    .field label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+    .wait-box, .admin-box { margin-top: 18px; padding: 16px; border-radius: 18px; background: #f7f3ec; border: 1px solid #ece6db; }
+    .wait-title { font-size: 13px; color: #6d675f; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .wait-time { font-size: 28px; font-weight: 700; color: #0f7a36; line-height: 1; }
+    .wait-sub { margin-top: 8px; color: #635c54; font-size: 14px; line-height: 1.45; }
+    .send-btn { width: 100%; margin-top: 16px; padding: 15px 18px; font-size: 16px; font-weight: 700; background: #0f7a36; color: white; }
+    .small-text { color: #6d675f; font-size: 13px; line-height: 1.5; margin-top: 10px; }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #e4f3e8; color: #0f7a36; }
+    .hidden { display: none; }
+    .admin-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .admin-stat { background: #fffdfa; border: 1px solid #ece6db; border-radius: 18px; padding: 16px; }
+    .admin-stat-label { font-size: 13px; color: #6d675f; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .admin-stat-value { font-size: 28px; font-weight: 700; margin-top: 8px; color: #0f7a36; }
+    .top-actions { margin-top: 12px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    @media (max-width: 980px) { .wrap { grid-template-columns: 1fr; } .cart-section { order: -1; } .admin-meta { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { header h1 { font-size: 26px; } .pizza-name { font-size: 20px; } .extras-grid { grid-template-columns: 1fr; } .wait-time { font-size: 24px; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Viccy g’s Pizzeria</h1>
-    <p>Bestill pizza her når vi lager mat 🍕</p>
-  </header>
-
-  <div class="wrap">
-    <section class="menu-section">
-      <h2 class="section-title">Meny</h2>
-      <div class="menu-grid" id="menuGrid"></div>
-    </section>
-
-    <aside class="cart-section">
-      <h2 class="section-title">Din bestilling</h2>
-      <div id="cartArea">
-        <p class="cart-empty">Ingen pizzaer lagt til enda.</p>
+  <div id="customerView">
+    <header>
+      <h1>Victor’s Pizzeria</h1>
+      <p>Bestill pizza her når vi lager mat 🍕</p>
+      <div class="top-actions">
+        <button class="secondary-btn" onclick="showAdminLogin()">Admin</button>
       </div>
+    </header>
 
-      <div class="wait-box">
-        <div class="wait-title">Estimert ventetid</div>
-        <div class="wait-time" id="waitTime">0 min</div>
-        <div class="wait-sub">Beregnes automatisk med 5 minutter per pizza i bestillingen.</div>
-      </div>
+    <div class="wrap">
+      <section class="menu-section">
+        <h2 class="section-title">Meny</h2>
+        <div class="menu-grid" id="menuGrid"></div>
+      </section>
 
-      <div class="form-grid">
-        <div class="field">
-          <label for="customerName">Navn</label>
-          <input id="customerName" type="text" placeholder="Skriv navnet ditt" />
+      <aside class="cart-section">
+        <h2 class="section-title">Din bestilling</h2>
+        <div id="cartArea"><p class="cart-empty">Ingen pizzaer lagt til enda.</p></div>
+
+        <div class="wait-box">
+          <div class="wait-title">Estimert ventetid</div>
+          <div class="wait-time" id="waitTime">0 min</div>
+          <div class="wait-sub">Beregnes automatisk med 5 minutter per pizza i bestillingen.</div>
         </div>
-        <div class="field">
-          <label for="pickupTime">Når vil du ha pizzaen?</label>
-          <input id="pickupTime" type="text" placeholder="F.eks. så fort som mulig / kl 19:30" />
-        </div>
-        <div class="field">
-          <label for="extraMessage">Beskjed</label>
-          <textarea id="extraMessage" placeholder="F.eks. del med Emilie, uten chiliolje, ekstra stekt osv."></textarea>
-        </div>
-      </div>
 
-      <button class="send-btn" id="sendOrderBtn">Send bestilling</button>
-      <div class="small-text">
-        Ventetiden justerer seg automatisk etter hvor mange pizzaer som ligger i bestillingen.
+        <div class="form-grid">
+          <div class="field">
+            <label for="customerName">Navn</label>
+            <input id="customerName" type="text" placeholder="Skriv navnet ditt" />
+          </div>
+          <div class="field">
+            <label for="pickupTime">Når vil du ha pizzaen?</label>
+            <input id="pickupTime" type="text" placeholder="F.eks. så fort som mulig / kl 19:30" />
+          </div>
+          <div class="field">
+            <label for="extraMessage">Beskjed</label>
+            <textarea id="extraMessage" placeholder="F.eks. del med Emilie, uten chiliolje, ekstra stekt osv."></textarea>
+          </div>
+        </div>
+
+        <button class="send-btn" id="sendOrderBtn">Send bestilling</button>
+        <div class="small-text">Denne versjonen sender bestillinger til et felles ark via Google Apps Script.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="adminView" class="hidden">
+    <header>
+      <h1>Victor’s Pizzeria – Admin</h1>
+      <p>Bestillinger fra alle mobiler</p>
+      <div class="top-actions">
+        <button class="secondary-btn" onclick="goToShop()">Tilbake til meny</button>
+        <button class="secondary-btn" onclick="refreshAdminOrders()">Oppdater</button>
       </div>
-    </aside>
+    </header>
+
+    <div class="admin-layout">
+      <section class="admin-section">
+        <h2 class="section-title">Bestillinger</h2>
+        <div class="admin-box muted">Denne admin-delen er bare lett skjult med kode. Den er fin for deg og kompisene, men ikke laget som høysikker løsning.</div>
+        <div class="admin-meta">
+          <div class="admin-stat"><div class="admin-stat-label">Antall bestillinger</div><div class="admin-stat-value" id="adminOrderCount">0</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Antall pizzaer</div><div class="admin-stat-value" id="adminPizzaCount">0</div></div>
+          <div class="admin-stat"><div class="admin-stat-label">Estimert total tid</div><div class="admin-stat-value" id="adminTotalTime">0 min</div></div>
+        </div>
+        <div class="admin-controls">
+          <button class="danger-btn" onclick="clearAllOrders()">Slett alle bestillinger</button>
+        </div>
+        <div id="adminOrders" style="margin-top:18px;"><p class="cart-empty">Ingen bestillinger enda.</p></div>
+      </section>
+    </div>
   </div>
 
   <script>
+    const SCRIPT_URL = 'LIM_INN_APPS_SCRIPT_WEBAPP_URL_HER';
+    const ADMIN_CODE = 'victor123';
+
     const pizzas = [
       { id: 1, name: 'Margherita', image: '' },
       { id: 2, name: 'Skinke', image: '' },
@@ -374,31 +168,22 @@
     ];
 
     const extras = [
-      { name: 'Ekstra ost' },
-      { name: 'Skinke' },
-      { name: 'Pepperoni' },
-      { name: 'Parmaskinke' },
-      { name: 'Biff' },
-      { name: 'Kylling' },
-      { name: 'Sopp' },
-      { name: 'Løk' },
-      { name: 'Jalapeño' },
-      { name: 'Trøffel' },
-      { name: 'Oliven' },
-      { name: 'Hvitløksdressing' }
+      { name: 'Ekstra ost' }, { name: 'Skinke' }, { name: 'Pepperoni' }, { name: 'Parmaskinke' },
+      { name: 'Biff' }, { name: 'Kylling' }, { name: 'Sopp' }, { name: 'Løk' },
+      { name: 'Jalapeño' }, { name: 'Trøffel' }, { name: 'Oliven' }, { name: 'Hvitløksdressing' }
     ];
 
     let cart = [];
 
     const menuGrid = document.getElementById('menuGrid');
     const cartArea = document.getElementById('cartArea');
-    const sendOrderBtn = document.getElementById('sendOrderBtn');
     const waitTime = document.getElementById('waitTime');
+    const sendOrderBtn = document.getElementById('sendOrderBtn');
+    const customerView = document.getElementById('customerView');
+    const adminView = document.getElementById('adminView');
 
     function imageMarkup(pizza) {
-      if (pizza.image) {
-        return `<div class="image-placeholder"><img src="${pizza.image}" alt="${pizza.name}" /></div>`;
-      }
+      if (pizza.image) return `<div class="image-placeholder"><img src="${pizza.image}" alt="${pizza.name}" /></div>`;
       return `<div class="image-placeholder">Legg inn bilde av ${pizza.name}<br><span style="font-weight:400; font-size:13px;">Bytt ut image: '' med bildeadressen din i koden</span></div>`;
     }
 
@@ -407,36 +192,24 @@
     }
 
     function updateWaitTime() {
-      const pizzaCount = getPizzaCount();
-      const minutes = pizzaCount * 5;
-      waitTime.textContent = `${minutes} min`;
+      waitTime.textContent = `${getPizzaCount() * 5} min`;
     }
 
     function renderMenu() {
       menuGrid.innerHTML = pizzas.map(pizza => `
         <div class="pizza-card">
-          <div class="pizza-top">
-            <div>
-              <div class="pizza-number">${pizza.id}.</div>
-              <div class="pizza-name">${pizza.name}</div>
-            </div>
-          </div>
-
+          <div class="pizza-number">${pizza.id}.</div>
+          <div class="pizza-name">${pizza.name}</div>
           ${imageMarkup(pizza)}
-
           <div class="pizza-actions">
             <button class="primary-btn" onclick="toggleExtras(${pizza.id})">Velg + legg til</button>
           </div>
-
           <div class="extras-box" id="extras-${pizza.id}">
             <strong>Ekstra på ${pizza.name}</strong>
             <div class="extras-grid">
               ${extras.map(extra => `
                 <div class="extra-item">
-                  <label>
-                    <input type="checkbox" value="${extra.name}" />
-                    <span>${extra.name}</span>
-                  </label>
+                  <label><input type="checkbox" value="${extra.name}" /> <span>${extra.name}</span></label>
                 </div>
               `).join('')}
             </div>
@@ -451,42 +224,24 @@
     }
 
     function toggleExtras(pizzaId) {
-      const box = document.getElementById(`extras-${pizzaId}`);
-      box.classList.toggle('active');
+      document.getElementById(`extras-${pizzaId}`).classList.toggle('active');
     }
 
     function addPizzaToCart(pizzaId) {
       const pizza = pizzas.find(p => p.id === pizzaId);
       const box = document.getElementById(`extras-${pizzaId}`);
-      const checked = [...box.querySelectorAll('input[type="checkbox"]:checked')].map(input => ({
-        name: input.value
-      }));
+      const checked = [...box.querySelectorAll('input[type="checkbox"]:checked')].map(input => ({ name: input.value }));
       const note = box.querySelector('textarea').value.trim();
 
-      cart.push({
-        id: Date.now() + Math.random(),
-        pizzaId: pizza.id,
-        name: pizza.name,
-        extras: checked,
-        note,
-        qty: 1
-      });
-
+      cart.push({ id: Date.now() + Math.random(), pizzaId: pizza.id, name: pizza.name, extras: checked, note, qty: 1 });
       box.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
       box.querySelector('textarea').value = '';
       box.classList.remove('active');
-
       renderCart();
     }
 
     function changeQty(id, change) {
-      cart = cart.map(item => {
-        if (item.id === id) {
-          return { ...item, qty: item.qty + change };
-        }
-        return item;
-      }).filter(item => item.qty > 0);
-
+      cart = cart.map(item => item.id === id ? { ...item, qty: item.qty + change } : item).filter(item => item.qty > 0);
       renderCart();
     }
 
@@ -496,26 +251,20 @@
     }
 
     function renderCart() {
-      if (cart.length === 0) {
+      if (!cart.length) {
         cartArea.innerHTML = '<p class="cart-empty">Ingen pizzaer lagt til enda.</p>';
         updateWaitTime();
         return;
       }
 
       cartArea.innerHTML = `<div class="cart-list">${cart.map(item => {
-        const extrasText = item.extras.length
-          ? 'Ekstra: ' + item.extras.map(extra => `${extra.name}`).join(', ')
-          : 'Ingen ekstra';
+        const extrasText = item.extras.length ? 'Ekstra: ' + item.extras.map(extra => extra.name).join(', ') : 'Ingen ekstra';
         const noteText = item.note ? `<div class="cart-sub">Beskjed: ${item.note}</div>` : '';
         return `
           <div class="cart-item">
-            <div class="cart-header">
-              <div>
-                <div class="cart-name">${item.name}</div>
-                <div class="cart-sub">${extrasText}</div>
-                ${noteText}
-              </div>
-            </div>
+            <div class="cart-name">${item.name}</div>
+            <div class="cart-sub">${extrasText}</div>
+            ${noteText}
             <div class="cart-controls">
               <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
               <strong>${item.qty}</strong>
@@ -525,29 +274,132 @@
           </div>
         `;
       }).join('')}</div>`;
-
       updateWaitTime();
     }
 
-    sendOrderBtn.addEventListener('click', () => {
-      const customerName = document.getElementById('customerName').value.trim();
-
-      if (cart.length === 0) {
+    async function sendOrder() {
+      if (!cart.length) {
         alert('Legg til minst én pizza først.');
         return;
       }
+      if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) {
+        alert('Du må først legge inn Apps Script URL i koden.');
+        return;
+      }
 
-      const minutes = getPizzaCount() * 5;
-      const nameText = customerName ? ` til ${customerName}` : '';
+      const order = {
+        customerName: document.getElementById('customerName').value.trim() || 'Uten navn',
+        pickupTime: document.getElementById('pickupTime').value.trim() || 'Ikke valgt',
+        message: document.getElementById('extraMessage').value.trim(),
+        pizzaCount: getPizzaCount(),
+        estimatedWait: getPizzaCount() * 5,
+        createdAt: new Date().toLocaleString('no-NO'),
+        items: cart
+      };
 
-      cart = [];
-      document.getElementById('customerName').value = '';
-      document.getElementById('pickupTime').value = '';
-      document.getElementById('extraMessage').value = '';
+      try {
+        sendOrderBtn.disabled = true;
+        sendOrderBtn.textContent = 'Sender...';
 
-      renderCart();
-      alert(`Bestilling sendt${nameText}! Estimert ventetid var ${minutes} min.`);
-    });
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'createOrder', order })
+        });
+
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'Noe gikk galt');
+
+        cart = [];
+        document.getElementById('customerName').value = '';
+        document.getElementById('pickupTime').value = '';
+        document.getElementById('extraMessage').value = '';
+        renderCart();
+        alert(`Bestilling sendt! Estimert ventetid er ${order.estimatedWait} min.`);
+      } catch (error) {
+        alert('Klarte ikke å sende bestilling. Sjekk Apps Script-oppsettet.');
+      } finally {
+        sendOrderBtn.disabled = false;
+        sendOrderBtn.textContent = 'Send bestilling';
+      }
+    }
+
+    async function refreshAdminOrders() {
+      if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) return;
+      const code = sessionStorage.getItem('pizzaAdminCode') || '';
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getOrders&adminCode=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
+
+        const orders = data.orders || [];
+        document.getElementById('adminOrderCount').textContent = orders.length;
+        const totalPizzas = orders.reduce((sum, order) => sum + Number(order.pizzaCount || 0), 0);
+        document.getElementById('adminPizzaCount').textContent = totalPizzas;
+        document.getElementById('adminTotalTime').textContent = `${totalPizzas * 5} min`;
+
+        const adminOrders = document.getElementById('adminOrders');
+        if (!orders.length) {
+          adminOrders.innerHTML = '<p class="cart-empty">Ingen bestillinger enda.</p>';
+          return;
+        }
+
+        adminOrders.innerHTML = `<div class="admin-list">${orders.map(order => `
+          <div class="admin-order">
+            <div class="badge">Bestilling</div>
+            <div class="admin-name">${order.customerName}</div>
+            <div class="admin-sub">Sendt: ${order.createdAt}</div>
+            <div class="admin-sub">Ønsket tidspunkt: ${order.pickupTime}</div>
+            <div class="admin-sub">Ventetid: ${order.estimatedWait} min</div>
+            ${order.message ? `<div class="admin-sub">Felles beskjed: ${order.message}</div>` : ''}
+            <div class="admin-sub" style="margin-top:10px;">${(order.items || []).map(item => {
+              const extras = item.extras?.length ? ` | ${item.extras.map(x => x.name).join(', ')}` : '';
+              const note = item.note ? ` | ${item.note}` : '';
+              return `${item.qty}x ${item.name}${extras}${note}`;
+            }).join('<br>')}</div>
+          </div>
+        `).join('')}</div>`;
+      } catch (error) {
+        document.getElementById('adminOrders').innerHTML = '<p class="cart-empty">Klarte ikke å hente bestillinger. Sjekk admin-kode og Apps Script.</p>';
+      }
+    }
+
+    async function clearAllOrders() {
+      if (!confirm('Slette alle bestillinger?')) return;
+      const code = sessionStorage.getItem('pizzaAdminCode') || '';
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'clearOrders', adminCode: code })
+        });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
+        refreshAdminOrders();
+      } catch (error) {
+        alert('Klarte ikke å slette bestillinger.');
+      }
+    }
+
+    function showAdminLogin() {
+      const code = prompt('Skriv admin-kode');
+      if (code === null) return;
+      if (code !== ADMIN_CODE) {
+        alert('Feil kode');
+        return;
+      }
+      sessionStorage.setItem('pizzaAdminCode', code);
+      customerView.classList.add('hidden');
+      adminView.classList.remove('hidden');
+      refreshAdminOrders();
+    }
+
+    function goToShop() {
+      adminView.classList.add('hidden');
+      customerView.classList.remove('hidden');
+    }
+
+    sendOrderBtn.addEventListener('click', sendOrder);
 
     renderMenu();
     renderCart();
@@ -556,6 +408,10 @@
     window.addPizzaToCart = addPizzaToCart;
     window.changeQty = changeQty;
     window.removeItem = removeItem;
+    window.showAdminLogin = showAdminLogin;
+    window.goToShop = goToShop;
+    window.refreshAdminOrders = refreshAdminOrders;
+    window.clearAllOrders = clearAllOrders;
   </script>
 </body>
 </html>
