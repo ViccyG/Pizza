@@ -10,53 +10,204 @@
     header { background: #0f7a36; color: white; padding: 28px 20px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.12); position: sticky; top: 0; z-index: 10; }
     header h1 { margin: 0; font-size: 32px; }
     header p { margin: 8px 0 0; opacity: .95; }
+
     .wrap, .admin-layout { max-width: 1300px; margin: 0 auto; padding: 24px 16px 120px; }
     .wrap { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; }
-    .menu-section, .cart-section, .admin-section { background: white; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 20px; }
+
+    .menu-section, .cart-section, .admin-section {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 20px;
+    }
+
     .section-title { margin: 0 0 18px; font-size: 24px; }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .pizza-card { border: 1px solid #ece7df; border-radius: 22px; padding: 16px; background: #fffdfa; transition: .18s ease; }
+
+    .pizza-card {
+      border: 1px solid #ece7df;
+      border-radius: 22px;
+      padding: 16px;
+      background: #fffdfa;
+      transition: .18s ease;
+    }
     .pizza-card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.08); }
+
     .pizza-number { color: #0f7a36; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
     .pizza-name { font-size: 22px; font-weight: 700; line-height: 1.1; }
-    .image-placeholder { margin-top: 14px; width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; background: #ece5d8; border: 2px dashed #d1c5b2; display: flex; align-items: center; justify-content: center; text-align: center; color: #6d675f; font-weight: 700; padding: 12px; overflow: hidden; }
+
+    .image-placeholder {
+      margin-top: 14px;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      background: #ece5d8;
+      border: 2px dashed #d1c5b2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #6d675f;
+      font-weight: 700;
+      padding: 12px;
+      overflow: hidden;
+    }
     .image-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .pizza-actions, .admin-controls, .top-actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .pizza-actions, .admin-controls, .top-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
     .top-actions { justify-content: center; }
-    button { border: none; border-radius: 14px; padding: 12px 16px; font-size: 15px; cursor: pointer; transition: .18s ease; }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
     .primary-btn { background: #0f7a36; color: white; font-weight: 700; }
     .primary-btn:hover { background: #0c632c; }
+
     .secondary-btn { background: #efe8db; color: #1e1e1e; font-weight: 700; }
     .danger-btn { background: #ffe5e5; color: #a72828; font-weight: 700; }
     .done-btn { background: #e4f3e8; color: #0f7a36; font-weight: 700; }
-    .extras-box { margin-top: 14px; padding-top: 14px; border-top: 1px solid #efe8dd; display: none; }
+
+    .extras-box {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #efe8dd;
+      display: none;
+    }
     .extras-box.active { display: block; }
-    .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
     .extra-item { background: #f7f3ec; border-radius: 14px; padding: 10px; }
-    .extra-item label { display: flex; gap: 8px; align-items: center; cursor: pointer; width: 100%; font-size: 14px; }
-    .note-area, .field input, .field textarea { width: 100%; border-radius: 14px; border: 1px solid #ddd4c5; padding: 12px 14px; font: inherit; background: white; }
+    .extra-item label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .note-area, .field input, .field textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #ddd4c5;
+      padding: 12px 14px;
+      font: inherit;
+      background: white;
+    }
     .note-area { min-height: 72px; margin-top: 12px; resize: vertical; }
     .field textarea { min-height: 90px; resize: vertical; }
+
     .cart-empty, .muted { color: #6d675f; margin-top: 10px; }
-    .cart-list, .admin-list { display: flex; flex-direction: column; gap: 14px; }
-    .cart-item, .admin-order { border: 1px solid #ece6db; border-radius: 18px; padding: 14px; background: #fffdfa; }
+
+    .cart-list, .admin-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cart-item, .admin-order {
+      border: 1px solid #ece6db;
+      border-radius: 18px;
+      padding: 14px;
+      background: #fffdfa;
+    }
+
     .admin-order.done { opacity: .6; background: #f5f3ef; }
+
     .cart-name, .admin-name { font-weight: 700; font-size: 18px; }
     .cart-sub, .admin-sub { margin-top: 6px; color: #635c54; font-size: 14px; line-height: 1.45; }
-    .cart-controls { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .qty-btn { width: 38px; height: 38px; border-radius: 12px; background: #efe8db; font-size: 20px; padding: 0; }
+
+    .cart-controls {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #efe8db;
+      font-size: 20px;
+      padding: 0;
+    }
+
     .remove-btn { background: #ffe5e5; color: #a72828; font-weight: 700; }
+
     .form-grid { display: grid; gap: 12px; margin-top: 22px; }
     .field label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 14px; }
-    .wait-box, .admin-box { margin-top: 18px; padding: 16px; border-radius: 18px; background: #f7f3ec; border: 1px solid #ece6db; }
-    .wait-title { font-size: 13px; color: #6d675f; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-    .wait-time { font-size: 28px; font-weight: 700; color: #0f7a36; line-height: 1; }
+
+    .wait-box, .admin-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #f7f3ec;
+      border: 1px solid #ece6db;
+    }
+
+    .wait-title {
+      font-size: 13px;
+      color: #6d675f;
+      margin-bottom: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wait-time {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f7a36;
+      line-height: 1;
+    }
+
     .wait-sub { margin-top: 8px; color: #635c54; font-size: 14px; line-height: 1.45; }
-    .send-btn { width: 100%; margin-top: 16px; padding: 15px 18px; font-size: 16px; font-weight: 700; background: #0f7a36; color: white; }
+
+    .send-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 15px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      background: #0f7a36;
+      color: white;
+    }
+
     .small-text { color: #6d675f; font-size: 13px; line-height: 1.5; margin-top: 10px; }
-    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #e4f3e8; color: #0f7a36; }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e4f3e8;
+      color: #0f7a36;
+    }
+
     .badge.done { background: #ece7df; color: #6d675f; }
+
     .hidden { display: none; }
+
     .new-order-popup {
       position: fixed;
       right: 18px;
@@ -74,26 +225,57 @@
       pointer-events: none;
       transition: .22s ease;
     }
+
     .new-order-popup.show {
       transform: translateY(0);
       opacity: 1;
     }
-    .popup-title {
+
+    .popup-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+    .popup-sub { font-size: 14px; opacity: .95; line-height: 1.4; }
+
+    .admin-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .admin-stat {
+      background: #fffdfa;
+      border: 1px solid #ece6db;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .admin-stat-label {
+      font-size: 13px;
+      color: #6d675f;
       font-weight: 700;
-      font-size: 16px;
-      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
     }
-    .popup-sub {
-      font-size: 14px;
-      opacity: .95;
-      line-height: 1.4;
+
+    .admin-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+      color: #0f7a36;
     }
-    .admin-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
-    .admin-stat { background: #fffdfa; border: 1px solid #ece6db; border-radius: 18px; padding: 16px; }
-    .admin-stat-label { font-size: 13px; color: #6d675f; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-    .admin-stat-value { font-size: 28px; font-weight: 700; margin-top: 8px; color: #0f7a36; }
-    @media (max-width: 980px) { .wrap { grid-template-columns: 1fr; } .cart-section { order: -1; } .admin-meta { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { header h1 { font-size: 26px; } .pizza-name { font-size: 20px; } .extras-grid { grid-template-columns: 1fr; } .wait-time { font-size: 24px; } .admin-meta { grid-template-columns: 1fr; } }
+
+    @media (max-width: 980px) {
+      .wrap { grid-template-columns: 1fr; }
+      .cart-section { order: -1; }
+      .admin-meta { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 26px; }
+      .pizza-name { font-size: 20px; }
+      .extras-grid { grid-template-columns: 1fr; }
+      .wait-time { font-size: 24px; }
+      .admin-meta { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -157,23 +339,34 @@
       <section class="admin-section">
         <h2 class="section-title">Bestillinger</h2>
         <div class="admin-box muted">Nye bestillinger gir pling når admin-siden er åpen. Marker ferdige ordrer når de er laget, så går ventetiden ned automatisk.</div>
+
         <div class="admin-meta">
           <div class="admin-stat"><div class="admin-stat-label">Aktive bestillinger</div><div class="admin-stat-value" id="adminOrderCount">0</div></div>
           <div class="admin-stat"><div class="admin-stat-label">Aktive pizzaer</div><div class="admin-stat-value" id="adminPizzaCount">0</div></div>
           <div class="admin-stat"><div class="admin-stat-label">Ventetid nå</div><div class="admin-stat-value" id="adminTotalTime">0 min</div></div>
           <div class="admin-stat"><div class="admin-stat-label">Ferdige totalt</div><div class="admin-stat-value" id="adminDoneCount">0</div></div>
         </div>
+
         <div class="admin-controls">
           <button class="danger-btn" onclick="clearAllOrders()">Slett alle bestillinger</button>
         </div>
-        <div id="adminOrders" style="margin-top:18px;"><p class="cart-empty">Ingen bestillinger enda.</p></div>
+
+        <div id="adminOrders" style="margin-top:18px;">
+          <p class="cart-empty">Ingen bestillinger enda.</p>
+        </div>
       </section>
     </div>
+  </div>
+
+  <div id="newOrderPopup" class="new-order-popup">
+    <div class="popup-title">Ny ordre innkommet</div>
+    <div class="popup-sub" id="newOrderPopupText">Det kom inn en ny bestilling.</div>
   </div>
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZTCXoPCMM2nw9696ld-bGfnGkJ3o4G4-yGvS7UIvlP_AzT2fTBQFp2KZJIJNhkxs/exec';
     const ADMIN_CODE = 'victor123';
+    const PING_URL = 'https://raw.githubusercontent.com/viccyg/PizzaBestilling/main/pling.mp3';
 
     const pizzas = [
       { id: 1, name: 'Margherita', image: '' },
@@ -220,29 +413,20 @@
     const customerView = document.getElementById('customerView');
     const adminView = document.getElementById('adminView');
 
-    function playPing() {
-  try {
-    const audio = new Audio('https://raw.githubusercontent.com/viccyg/PizzaBestilling/main/pling.mp3');
-    audio.volume = 1.0;
-
-    const playPromise = audio.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // fallback hvis lyd er blokkert
-        document.addEventListener('click', () => audio.play(), { once: true });
-      });
+    function unlockAudio() {
+      const testAudio = new Audio(PING_URL);
+      testAudio.volume = 0;
+      testAudio.play().catch(() => {});
     }
 
-  } catch (e) {
-    console.log('Lyd feilet', e);
-  }
-}
-
-        const now = ctx.currentTime;
-        playTone(1320, now, 0.16, 0.12);
-        playTone(1760, now + 0.13, 0.26, 0.1);
-      } catch (e) {}
+    function playPing() {
+      try {
+        const audio = new Audio(PING_URL);
+        audio.volume = 1.0;
+        audio.play().catch(() => {});
+      } catch (e) {
+        console.log('Lyd feilet', e);
+      }
     }
 
     function showNewOrderPopup(order) {
@@ -250,14 +434,18 @@
       const text = document.getElementById('newOrderPopupText');
       const name = order?.customerName || 'Noen';
       const count = Number(order?.pizzaCount || 0);
+
       text.textContent = `${name} sendte ${count} pizza${count === 1 ? '' : 'er'}.`;
       popup.classList.add('show');
+
       if (popupTimeout) clearTimeout(popupTimeout);
       popupTimeout = setTimeout(() => popup.classList.remove('show'), 3500);
     }
 
     function imageMarkup(pizza) {
-      if (pizza.image) return `<div class="image-placeholder"><img src="${pizza.image}" alt="${pizza.name}" /></div>`;
+      if (pizza.image) {
+        return `<div class="image-placeholder"><img src="${pizza.image}" alt="${pizza.name}" /></div>`;
+      }
       return `<div class="image-placeholder">Legg inn bilde av ${pizza.name}<br><span style="font-weight:400; font-size:13px;">Bytt ut image: '' med bildeadressen din i koden</span></div>`;
     }
 
@@ -270,9 +458,11 @@
         waitTime.textContent = `${getPizzaCount() * 5} min`;
         return;
       }
+
       try {
         const res = await fetch(`${SCRIPT_URL}?action=getQueue`);
         const data = await res.json();
+
         if (data.ok) {
           waitTime.textContent = `${Number(data.waitMinutes || 0)} min`;
         }
@@ -319,15 +509,27 @@
       const checked = [...box.querySelectorAll('input[type="checkbox"]:checked')].map(input => ({ name: input.value }));
       const note = box.querySelector('textarea').value.trim();
 
-      cart.push({ id: Date.now() + Math.random(), pizzaId: pizza.id, name: pizza.name, extras: checked, note, qty: 1 });
+      cart.push({
+        id: Date.now() + Math.random(),
+        pizzaId: pizza.id,
+        name: pizza.name,
+        extras: checked,
+        note,
+        qty: 1
+      });
+
       box.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
       box.querySelector('textarea').value = '';
       box.classList.remove('active');
+
       renderCart();
     }
 
     function changeQty(id, change) {
-      cart = cart.map(item => item.id === id ? { ...item, qty: item.qty + change } : item).filter(item => item.qty > 0);
+      cart = cart
+        .map(item => item.id === id ? { ...item, qty: item.qty + change } : item)
+        .filter(item => item.qty > 0);
+
       renderCart();
     }
 
@@ -343,8 +545,12 @@
       }
 
       cartArea.innerHTML = `<div class="cart-list">${cart.map(item => {
-        const extrasText = item.extras.length ? 'Ekstra: ' + item.extras.map(extra => extra.name).join(', ') : 'Ingen ekstra';
+        const extrasText = item.extras.length
+          ? 'Ekstra: ' + item.extras.map(extra => extra.name).join(', ')
+          : 'Ingen ekstra';
+
         const noteText = item.note ? `<div class="cart-sub">Beskjed: ${item.note}</div>` : '';
+
         return `
           <div class="cart-item">
             <div class="cart-name">${item.name}</div>
@@ -366,12 +572,9 @@
         alert('Legg til minst én pizza først.');
         return;
       }
-      if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) {
-        alert('Du må først legge inn Apps Script URL i koden.');
-        return;
-      }
 
       const liveWait = Number((waitTime.textContent || '0').replace(/[^\d]/g, '')) || 0;
+
       const order = {
         customerName: document.getElementById('customerName').value.trim() || 'Uten navn',
         pickupTime: document.getElementById('pickupTime').value.trim() || 'Ikke valgt',
@@ -400,8 +603,10 @@
         document.getElementById('customerName').value = '';
         document.getElementById('pickupTime').value = '';
         document.getElementById('extraMessage').value = '';
+
         renderCart();
         await refreshCustomerWaitTime();
+
         alert(`Bestilling sendt! Ca ventetid nå er ${order.estimatedWait} min.`);
       } catch (error) {
         alert('Klarte ikke å sende bestilling. Sjekk Apps Script-oppsettet.');
@@ -413,14 +618,17 @@
 
     async function updateOrderStatus(orderId, status) {
       const code = sessionStorage.getItem('pizzaAdminCode') || '';
+
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'updateOrderStatus', orderId, status, adminCode: code })
         });
+
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || 'Kunne ikke oppdatere ordre');
+
         await refreshAdminOrders(true);
         await refreshCustomerWaitTime();
       } catch (error) {
@@ -429,11 +637,12 @@
     }
 
     async function refreshAdminOrders(silent = false) {
-      if (SCRIPT_URL.includes('LIM_INN_APPS_SCRIPT')) return;
       const code = sessionStorage.getItem('pizzaAdminCode') || '';
+
       try {
         const res = await fetch(`${SCRIPT_URL}?action=getOrders&adminCode=${encodeURIComponent(code)}`);
         const data = await res.json();
+
         if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
 
         const orders = data.orders || [];
@@ -448,6 +657,7 @@
             showNewOrderPopup(newOrders[0]);
           }
         }
+
         lastKnownActiveOrderIds = activeIds;
 
         document.getElementById('adminOrderCount').textContent = activeOrders.length;
@@ -457,6 +667,7 @@
         document.getElementById('adminDoneCount').textContent = doneOrders.length;
 
         const adminOrders = document.getElementById('adminOrders');
+
         if (!orders.length) {
           adminOrders.innerHTML = '<p class="cart-empty">Ingen bestillinger enda.</p>';
           return;
@@ -476,7 +687,9 @@
               return `${item.qty}x ${item.name}${extras}${note}`;
             }).join('<br>')}</div>
             <div class="admin-controls">
-              ${order.status !== 'done' ? `<button class="done-btn" onclick="updateOrderStatus('${order.id}','done')">Marker som ferdig</button>` : `<button class="secondary-btn" onclick="updateOrderStatus('${order.id}','active')">Angre ferdig</button>`}
+              ${order.status !== 'done'
+                ? `<button class="done-btn" onclick="updateOrderStatus('${order.id}','done')">Marker som ferdig</button>`
+                : `<button class="secondary-btn" onclick="updateOrderStatus('${order.id}','active')">Angre ferdig</button>`}
             </div>
           </div>
         `).join('')}</div>`;
@@ -487,15 +700,19 @@
 
     async function clearAllOrders() {
       if (!confirm('Slette alle bestillinger?')) return;
+
       const code = sessionStorage.getItem('pizzaAdminCode') || '';
+
       try {
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'clearOrders', adminCode: code })
         });
+
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || 'Ingen tilgang');
+
         lastKnownActiveOrderIds = [];
         await refreshAdminOrders(true);
         await refreshCustomerWaitTime();
@@ -517,13 +734,18 @@
     function showAdminLogin() {
       const code = prompt('Skriv admin-kode');
       if (code === null) return;
+
       if (code !== ADMIN_CODE) {
         alert('Feil kode');
         return;
       }
+
       sessionStorage.setItem('pizzaAdminCode', code);
+
       customerView.classList.add('hidden');
       adminView.classList.remove('hidden');
+
+      unlockAudio();
       refreshAdminOrders(true);
       startAdminPolling();
     }
@@ -536,6 +758,9 @@
     }
 
     sendOrderBtn.addEventListener('click', sendOrder);
+
+    window.addEventListener('click', unlockAudio, { once: true });
+    window.addEventListener('touchstart', unlockAudio, { once: true });
 
     renderMenu();
     renderCart();
@@ -552,9 +777,5 @@
     window.clearAllOrders = clearAllOrders;
     window.updateOrderStatus = updateOrderStatus;
   </script>
-  <div id="newOrderPopup" class="new-order-popup">
-    <div class="popup-title">Ny ordre innkommet</div>
-    <div class="popup-sub" id="newOrderPopupText">Det kom inn en ny bestilling.</div>
-  </div>
 </body>
 </html>
